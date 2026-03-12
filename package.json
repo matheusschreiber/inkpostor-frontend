@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "format": "prettier --write 'src/**/*.{ts,tsx}' 'tests/**/*.{ts,tsx}'",
+    "check-format": "prettier --check 'src/**/*.{ts,tsx}' 'tests/**/*.{ts,tsx}'"
   },
   "dependencies": {
     "clsx": "^2.1.1",
