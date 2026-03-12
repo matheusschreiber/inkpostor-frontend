@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { useGameStore, type StrokeData } from '../store/gameState';
+import { useGameStore } from '../store/gameState';
 import { Eraser, CheckSquare, Clock } from 'lucide-react';
 
 export const Canvas: React.FC = () => {
@@ -72,12 +72,14 @@ export const Canvas: React.FC = () => {
 
             if (stroke.isNewStroke || !currentPathStart) {
                 ctx.beginPath();
+                ctx.strokeStyle = stroke.color;
                 ctx.moveTo(stroke.x, stroke.y);
                 ctx.lineTo(stroke.x, stroke.y);
                 ctx.stroke();
                 currentPathStart = { x: stroke.x, y: stroke.y };
             } else {
                 ctx.beginPath();
+                ctx.strokeStyle = stroke.color;
                 ctx.moveTo(currentPathStart.x, currentPathStart.y);
                 ctx.lineTo(stroke.x, stroke.y);
                 ctx.stroke();

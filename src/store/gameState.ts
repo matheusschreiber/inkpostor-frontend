@@ -53,7 +53,7 @@ export interface GameState {
     };
 }
 
-export const useGameStore = create<GameState>()((set, get) => ({
+export const useGameStore = create<GameState>()((set) => ({
     roomId: null,
     hostId: null,
     phase: 'LOBBY',
@@ -91,6 +91,7 @@ export const useGameStore = create<GameState>()((set, get) => ({
         },
         drawStroke: (stroke) => {
             socket.emit('drawStroke', stroke);
+            set(state => ({ canvasStrokes: [...state.canvasStrokes, stroke] }));
         },
         clearCanvas: () => {
             socket.emit('clearCanvas');
