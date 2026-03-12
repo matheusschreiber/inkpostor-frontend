@@ -95,7 +95,7 @@ export const useGameStore = create<GameState>()((set) => ({
         socket.connect();
         socket.emit("createRoom", { roomId });
         set({ myName: playerName });
-      } catch (err) {
+      } catch {
         set({ errorMessage: "Server connection error." });
       }
     },
@@ -116,7 +116,7 @@ export const useGameStore = create<GameState>()((set) => ({
         socket.connect();
         socket.emit("joinRoom", { roomId });
         set({ myName: playerName });
-      } catch (err) {
+      } catch {
         set({ errorMessage: "Server connection error." });
       }
     },

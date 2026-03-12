@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useGameStore } from "../store/gameState";
-import { Eye, EyeOff, Sparkles, AlertTriangle } from "lucide-react";
+import { Eye, Sparkles, AlertTriangle } from "lucide-react";
 
 export const RoleReveal: React.FC = () => {
   const [revealed, setRevealed] = useState(false);
   const amIImpostor = useGameStore((state) => state.amIImpostor);
   const secretCategory = useGameStore((state) => state.secretCategory);
   const secretWord = useGameStore((state) => state.secretWord);
-  const roomId = useGameStore((state) => state.roomId);
   const myId = useGameStore((state) => state.myId);
   const hostId = useGameStore((state) => state.hostId);
   const actions = useGameStore((state) => state.actions);

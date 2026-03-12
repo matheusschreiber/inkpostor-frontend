@@ -13,7 +13,6 @@ export const GameResult: React.FC = () => {
   const actions = useGameStore((state) => state.actions);
 
   const isHost = myId === hostId;
-  const amIImpostor = myId === impostorId;
 
   // Tally votes
   const ejectedResult = useMemo(() => {
