@@ -2,13 +2,13 @@
 
 @theme {
   /* Dynamic vibrant palette for Web App */
-  --color-ink-bg: #0f172a;
-  --color-ink-surface: #1e293b;
-  --color-ink-accent: #3b82f6;
+  --color-ink-bg: #1c1917;
+  --color-ink-surface: #292524;
+  --color-ink-accent: #dc2626;
   --color-ink-danger: #ef4444;
   --color-ink-success: #10b981;
-  --color-ink-text: #f8fafc;
-  --color-ink-text-muted: #94a3b8;
+  --color-ink-text: #fafaf9;
+  --color-ink-text-muted: #a8a29e;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }

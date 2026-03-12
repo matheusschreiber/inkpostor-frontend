@@ -22,13 +22,13 @@ export const JoinScreen: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-900">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-stone-900">
             <div className="max-w-md w-full text-center space-y-8">
                 <div className="space-y-2">
                     <div className="inline-flex items-center justify-center">
                         <img src="/favicon.svg" alt="Inkpostor Logo" className="w-60 h-60" />
                     </div>
-                    <p className="text-slate-400 text-lg">Draw together. Find the fake.</p>
+                    <p className="text-stone-400 text-lg">Draw together. Find the fake.</p>
                 </div>
 
                 {errorMessage && (
@@ -37,14 +37,14 @@ export const JoinScreen: React.FC = () => {
                     </div>
                 )}
 
-                <div className="bg-slate-800 p-6 rounded-2xl shadow-xl border border-slate-700 space-y-6">
+                <div className="bg-stone-800 p-6 rounded-2xl shadow-xl border border-stone-700 space-y-6">
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-1 text-left">Your Name</label>
+                            <label className="block text-sm font-medium text-stone-400 mb-1 text-left">Your Name</label>
                             <input
                                 type="text"
                                 placeholder="Enter your name"
-                                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-white placeholder-slate-500"
+                                className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-white placeholder-stone-500"
                                 value={playerName}
                                 onChange={(e) => setPlayerName(e.target.value)}
                                 maxLength={15}
@@ -65,20 +65,20 @@ export const JoinScreen: React.FC = () => {
 
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-slate-700"></div>
+                            <div className="w-full border-t border-stone-700"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-2 bg-slate-800 text-slate-500">OR</span>
+                            <span className="px-2 bg-stone-800 text-stone-500">OR</span>
                         </div>
                     </div>
 
                     <form onSubmit={handleJoin} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-400 mb-1 text-left">Room Code</label>
+                            <label className="block text-sm font-medium text-stone-400 mb-1 text-left">Room Code</label>
                             <input
                                 type="text"
                                 placeholder="E.g. X7K9A2"
-                                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none text-center uppercase tracking-widest text-white placeholder-slate-600"
+                                className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all outline-none text-center uppercase tracking-widest text-white placeholder-stone-600"
                                 value={roomId}
                                 onChange={(e) => setRoomId(e.target.value)}
                                 maxLength={6}
