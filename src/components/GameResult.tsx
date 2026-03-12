@@ -45,7 +45,7 @@ export const GameResult: React.FC = () => {
     const ejectedName = players.find(p => p.id === ejectedResult)?.name;
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-950">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-stone-950">
             {/* We could add react-confetti here if installed, but for MVP CSS animations are enough */}
             <div className="max-w-2xl w-full text-center space-y-8 z-10">
 
@@ -62,7 +62,7 @@ export const GameResult: React.FC = () => {
                         {impostorCaught ? 'Impostor Defeated!' : 'Impostor Won!'}
                     </h1>
 
-                    <div className="text-xl md:text-2xl text-slate-300 font-medium space-y-2">
+                    <div className="text-xl md:text-2xl text-stone-300 font-medium space-y-2">
                         {!ejectedResult ? (
                             <p>Votes were tied or skipped.</p>
                         ) : (
@@ -75,24 +75,24 @@ export const GameResult: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 shadow-xl">
-                    <p className="text-slate-400 mb-2 uppercase tracking-wider text-sm font-semibold">The secret word was</p>
+                <div className="bg-stone-800 rounded-2xl p-6 border border-stone-700 shadow-xl">
+                    <p className="text-stone-400 mb-2 uppercase tracking-wider text-sm font-semibold">The secret word was</p>
                     <div className="text-3xl font-black text-white">{secretWord}</div>
-                    <div className="text-slate-500 mt-1">{secretCategory}</div>
+                    <div className="text-stone-500 mt-1">{secretCategory}</div>
                 </div>
 
                 {isHost ? (
                     <button
                         onClick={actions.playAgain}
-                        className="w-full group relative overflow-hidden rounded-2xl bg-white text-slate-900 p-[2px] transition-all hover:scale-[1.02] active:scale-[0.98]"
+                        className="w-full group relative overflow-hidden rounded-2xl bg-white text-stone-900 p-[2px] transition-all hover:scale-[1.02] active:scale-[0.98]"
                     >
-                        <div className="flex h-full w-full items-center justify-center gap-2 rounded-2xl bg-white px-8 py-5 font-black text-slate-900">
-                            <Play className="fill-slate-900 w-6 h-6" />
+                        <div className="flex h-full w-full items-center justify-center gap-2 rounded-2xl bg-white px-8 py-5 font-black text-stone-900">
+                            <Play className="fill-stone-900 w-6 h-6" />
                             <span className="text-xl tracking-wide uppercase">Play Again</span>
                         </div>
                     </button>
                 ) : (
-                    <div className="text-slate-500 animate-pulse mt-8">
+                    <div className="text-stone-500 animate-pulse mt-8">
                         Waiting for host to start a new game...
                     </div>
                 )}

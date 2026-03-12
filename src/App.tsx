@@ -31,7 +31,7 @@ function App() {
       return <GameResult />;
     default:
       return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-900 text-slate-400">
+        <div className="min-h-screen flex items-center justify-center bg-stone-900 text-stone-400">
           Unknown Game Phase: {phase}
         </div>
       );

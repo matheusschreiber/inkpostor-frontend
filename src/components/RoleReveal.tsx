@@ -15,13 +15,13 @@ export const RoleReveal: React.FC = () => {
     const isHost = myId === hostId;
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-950 relative overflow-hidden">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-stone-950 relative overflow-hidden">
             {/* Background ambient light */}
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 blur-[120px] rounded-full opacity-20 pointer-events-none transition-colors duration-1000 ${revealed ? (amIImpostor ? 'bg-red-500' : 'bg-emerald-500') : 'bg-blue-500'}`} />
 
             <div className="z-10 max-w-md w-full text-center space-y-8">
                 <div className="space-y-2">
-                    <h2 className="text-xl font-medium text-slate-400">Phase 1</h2>
+                    <h2 className="text-xl font-medium text-stone-400">Phase 1</h2>
                     <h1 className="text-4xl font-black text-white tracking-tight">Your Secret Role</h1>
                 </div>
 
@@ -37,7 +37,7 @@ export const RoleReveal: React.FC = () => {
                                 ? (amIImpostor
                                     ? 'border-red-500/50 bg-red-950/40 shadow-[0_0_50px_rgba(239,68,68,0.2)]'
                                     : 'border-emerald-500/50 bg-emerald-950/40 shadow-[0_0_50px_rgba(16,185,129,0.2)]')
-                                : 'border-slate-700 bg-slate-800 hover:bg-slate-750 hover:border-slate-600'
+                                : 'border-stone-700 bg-stone-800 hover:bg-stone-750 hover:border-stone-600'
                             }`}
                     >
                         {revealed ? (
@@ -47,7 +47,7 @@ export const RoleReveal: React.FC = () => {
                                         <AlertTriangle className="w-16 h-16 text-red-500 mb-4 animate-pulse" />
                                         <h3 className="text-3xl font-black text-white tracking-widest uppercase text-red-100">You are the <br /><span className="text-red-500">Inkpostor</span></h3>
                                         <p className="mt-4 text-red-200/80 font-medium text-lg">Fake it till you make it.</p>
-                                        <p className="text-slate-400 mt-2 text-sm max-w-xs mx-auto">Category: {secretCategory}</p>
+                                        <p className="text-stone-400 mt-2 text-sm max-w-xs mx-auto">Category: {secretCategory}</p>
                                     </>
                                 ) : (
                                     <>
@@ -61,7 +61,7 @@ export const RoleReveal: React.FC = () => {
                                 )}
                             </div>
                         ) : (
-                            <div className="flex flex-col items-center text-slate-400 gap-4 transition-transform group-hover:scale-105">
+                            <div className="flex flex-col items-center text-stone-400 gap-4 transition-transform group-hover:scale-105">
                                 <Eye className="w-12 h-12" />
                                 <span className="text-lg font-medium">Press and hold to reveal</span>
                             </div>
@@ -71,19 +71,19 @@ export const RoleReveal: React.FC = () => {
 
                 {isHost ? (
                     <div className="pt-8">
-                        <p className="text-slate-500 text-sm mb-4">Make sure everyone knows their role before continuing.</p>
+                        <p className="text-stone-500 text-sm mb-4">Make sure everyone knows their role before continuing.</p>
                         <button
                             onClick={actions.proceedToDrawing}
-                            className="w-full rounded-2xl bg-white text-slate-900 px-6 py-4 font-bold text-lg transition-all hover:bg-slate-200 active:scale-95 shadow-lg shadow-white/10"
+                            className="w-full rounded-2xl bg-white text-stone-900 px-6 py-4 font-bold text-lg transition-all hover:bg-stone-200 active:scale-95 shadow-lg shadow-white/10"
                         >
                             Start Drawing!
                         </button>
                     </div>
                 ) : (
-                    <div className="pt-12 text-slate-500 flex items-center justify-center gap-3">
+                    <div className="pt-12 text-stone-500 flex items-center justify-center gap-3">
                         <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-slate-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-slate-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-stone-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-stone-500"></span>
                         </span>
                         Waiting for Host to begin...
                     </div>
