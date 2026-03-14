@@ -164,11 +164,9 @@ export const useGameStore = create<GameState>()((set) => ({
 socket.on("connect", () => {
   const state = useGameStore.getState();
 
-  // Restore the persistent UUID identity from localStorage
-  const userId = localStorage.getItem("inkpostor_user_id");
-  if (userId) {
-    useGameStore.setState({ myId: userId });
-  }
+  // Restore (or create) the persistent UUID identity using the shared helper
+  const userId = getOrCreateUserId();
+  useGameStore.setState({ myId: userId });
 
   // Auto-reconnect logic: if the socket dropped mid-game, rejoin the room
   if (state.roomId && state.myName) {
