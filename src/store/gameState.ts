@@ -1,6 +1,16 @@
 import { create } from "zustand";
 import { socket, SERVER_URL } from "../socket";
 
+function getOrCreateUserId(): string {
+  const key = "inkpostor_user_id";
+  let id = localStorage.getItem(key);
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem(key, id);
+  }
+  return id;
+}
+
 export type GamePhase =
   | "LOBBY"
   | "ROLE_REVEAL"
@@ -80,10 +90,11 @@ export const useGameStore = create<GameState>()((set) => ({
   actions: {
     connectAndCreate: async (roomId, playerName) => {
       try {
+        const userId = getOrCreateUserId();
         const res = await fetch(`${SERVER_URL || ""}/auth`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: playerName }),
+          body: JSON.stringify({ username: playerName, userId }),
         });
         if (!res.ok) {
           const data = await res.json();
@@ -94,17 +105,18 @@ export const useGameStore = create<GameState>()((set) => ({
         socket.auth = { token };
         socket.connect();
         socket.emit("createRoom", { roomId });
-        set({ myName: playerName });
+        set({ myName: playerName, myId: userId });
       } catch {
         set({ errorMessage: "Server connection error." });
       }
     },
     connectAndJoin: async (roomId, playerName) => {
       try {
+        const userId = getOrCreateUserId();
         const res = await fetch(`${SERVER_URL || ""}/auth`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: playerName }),
+          body: JSON.stringify({ username: playerName, userId }),
         });
         if (!res.ok) {
           const data = await res.json();
@@ -115,7 +127,7 @@ export const useGameStore = create<GameState>()((set) => ({
         socket.auth = { token };
         socket.connect();
         socket.emit("joinRoom", { roomId });
-        set({ myName: playerName });
+        set({ myName: playerName, myId: userId });
       } catch {
         set({ errorMessage: "Server connection error." });
       }
@@ -150,7 +162,19 @@ export const useGameStore = create<GameState>()((set) => ({
 
 // Setup socket listeners
 socket.on("connect", () => {
-  useGameStore.setState({ myId: socket.id });
+  const state = useGameStore.getState();
+
+  // Restore (or create) the persistent UUID identity using the shared helper
+  const userId = getOrCreateUserId();
+  useGameStore.setState({ myId: userId });
+
+  // Auto-reconnect logic: if the socket dropped mid-game, rejoin the room
+  if (state.roomId && state.myName) {
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Reconnecting to room:", state.roomId);
+    }
+    socket.emit("joinRoom", { roomId: state.roomId });
+  }
 });
 
 socket.on("gameStateUpdate", (newState) => {
