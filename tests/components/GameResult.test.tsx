@@ -88,13 +88,12 @@ describe("GameResult", () => {
 
     render(<GameResult />);
 
-    expect(screen.getByText("Impostor Won!")).toBeInTheDocument();
-    expect(screen.getByText("Votes were tied or skipped.")).toBeInTheDocument();
+    expect(screen.getByText("Nobody was ejected.")).toBeInTheDocument();
   });
 
   it("allows host to play again", () => {
     (useGameStore as any).mockImplementation((selector: any) => {
-      const state = { ...mockStateBase };
+      const state = { ...mockStateBase, votes: { "socket-123": "socket-456" } };
       return selector(state);
     });
 
@@ -107,7 +106,11 @@ describe("GameResult", () => {
 
   it("hides play again button for non-hosts", () => {
     (useGameStore as any).mockImplementation((selector: any) => {
-      const state = { ...mockStateBase, myId: "socket-456" }; // Not host
+      const state = {
+        ...mockStateBase,
+        myId: "socket-456",
+        votes: { "socket-456": "socket-123" },
+      }; // Not host
       return selector(state);
     });
 
@@ -117,7 +120,7 @@ describe("GameResult", () => {
       screen.queryByRole("button", { name: /play again/i }),
     ).not.toBeInTheDocument();
     expect(
-      screen.getByText("Waiting for host to start a new game..."),
+      screen.getByText("Waiting for host to restart..."),
     ).toBeInTheDocument();
   });
 });
