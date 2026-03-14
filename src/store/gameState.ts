@@ -172,7 +172,9 @@ socket.on("connect", () => {
 
   // Auto-reconnect logic: if the socket dropped mid-game, rejoin the room
   if (state.roomId && state.myName) {
-    console.log("Reconnecting to room:", state.roomId);
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Reconnecting to room:", state.roomId);
+    }
     socket.emit("joinRoom", { roomId: state.roomId });
   }
 });
