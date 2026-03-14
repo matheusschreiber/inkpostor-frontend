@@ -150,7 +150,19 @@ export const useGameStore = create<GameState>()((set) => ({
 
 // Setup socket listeners
 socket.on("connect", () => {
-  useGameStore.setState({ myId: socket.id });
+  const state = useGameStore.getState();
+  if (state.myName) {
+    useGameStore.setState({ myId: state.myName });
+  } else {
+    // Fallback just in case, though auth should require a name
+    useGameStore.setState({ myId: socket.id });
+  }
+
+  // Auto-reconnect logic if disconnected mid-game
+  if (state.roomId && state.myName) {
+    console.log("Reconnecting to room:", state.roomId);
+    socket.emit("joinRoom", { roomId: state.roomId });
+  }
 });
 
 socket.on("gameStateUpdate", (newState) => {
