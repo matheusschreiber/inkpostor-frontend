@@ -53,7 +53,7 @@ export const RoleReveal: React.FC = () => {
                       alt="Inkpostor Logo"
                       className="h-20"
                     />
-                    <h3 className="text-3xl font-black text-white tracking-widest uppercase text-red-100">
+                    <h3 className="text-3xl font-black text-white tracking-widest uppercase">
                       You are the <br />
                       <span className="text-red-500">Inkpostor</span>
                     </h3>
@@ -98,7 +98,7 @@ export const RoleReveal: React.FC = () => {
             </p>
             <button
               onClick={actions.proceedToDrawing}
-              className="w-full rounded-2xl bg-[#F8F6E7] text-stone-900 px-8 py-3 font-bold text-lg transition-all hover:bg-white cursor-pointer active:scale-95 shadow-lg shadow-white/10"
+              className="w-full rounded-2xl bg-ink-secondary text-stone-900 px-8 py-3 font-bold text-lg transition-all hover:bg-white cursor-pointer active:scale-95 shadow-lg shadow-white/10"
             >
               Start Drawing!
             </button>

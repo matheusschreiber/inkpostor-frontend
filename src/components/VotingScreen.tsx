@@ -50,14 +50,14 @@ export const VotingScreen: React.FC = () => {
                     onClick={() => setSelectedPlayer(player.id)}
                     className={`flex items-center gap-3 sm:p-4 p-3 rounded-xl border-2 transition-all duration-200 text-left cursor-pointer ${
                       selectedPlayer === player.id
-                        ? "border-[#8e0000] bg-[#8e0000]/10 scale-[1.02]"
+                        ? "border-ink-primary bg-ink-primary/10 scale-[1.02]"
                         : "border-stone-700 bg-stone-900 hover:border-stone-500"
                     }`}
                   >
                     <div
                       className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-sm sm:text-lg ${
                         selectedPlayer === player.id
-                          ? "bg-[#8e0000] text-white"
+                          ? "bg-ink-primary text-white"
                           : "bg-stone-800 text-stone-400"
                       }`}
                     >
@@ -99,14 +99,14 @@ export const VotingScreen: React.FC = () => {
               <button
                 onClick={handleVote}
                 disabled={!selectedPlayer}
-                className="w-full py-3 rounded-xl bg-[#8e0000] hover:bg-[#a60000] text-white sm:text-xl text-lg disabled:opacity-50 transition-all active:scale-95 cursor-pointer font-extrabold"
+                className="w-full py-3 rounded-xl bg-ink-primary hover:bg-ink-primary-accent text-white sm:text-xl text-lg disabled:opacity-50 transition-all active:scale-95 cursor-pointer font-extrabold"
               >
                 Confirm Vote
               </button>
             </div>
           </div>
         ) : (
-          <div className=" bg-stone-800 rounded-3xl p-12 border border-stone-700 shadow-xl text-center flex flex-col items-center justify-center min-h-[400px]">
+          <div className=" bg-stone-800 rounded-3xl p-12 border border-stone-700 shadow-xl text-center flex flex-col items-center justify-center min-h-100">
             <CheckCircle2 className="w-20 h-20 text-emerald-500 mb-6" />
             <h2 className="text-2xl font-bold text-white mb-2">Vote Cast!</h2>
             <p className="text-stone-400">

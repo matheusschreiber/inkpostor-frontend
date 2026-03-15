@@ -198,13 +198,13 @@ export const Canvas: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center min-h-[100dvh] bg-stone-900 p-2 md:p-6 pb-24 sm:justify-center mt-12 sm:mt-0">
+    <div className="flex flex-col items-center bg-stone-900 p-2 md:p-6 pb-24 sm:justify-center mt-12 sm:mt-0">
       <div className="w-full max-w-4xl space-y-4">
         {/* Header Banner */}
         <div className="flex items-center justify-between bg-stone-800 p-3 sm:p-4 rounded-2xl border border-stone-700 shadow-xl">
           <div className="flex items-center gap-3">
             <div
-              className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl uppercase text-white shadow-lg ${isMyTurn ? "bg-[#8e0000] shadow-[#8e0000]/30" : "bg-stone-600"}`}
+              className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl uppercase text-white shadow-lg ${isMyTurn ? "bg-ink-primary shadow-ink-primary/30" : "bg-stone-600"}`}
             >
               {activePlayer?.name.charAt(0) || "?"}
             </div>
@@ -233,7 +233,7 @@ export const Canvas: React.FC = () => {
             {isMyTurn && (
               <button
                 onClick={() => actions.endTurn()}
-                className="bg-[#F8F6E7] hover:bg-white text-black px-5 py-3 rounded-xl font-bold transition-all active:scale-95 shadow-lg shadow-[#F8F6E7]/20 cursor-pointer flex items-center gap-2"
+                className="bg-ink-secondary hover:bg-white text-black px-5 py-3 rounded-xl font-bold transition-all active:scale-95 shadow-lg shadow-ink-secondary/20 cursor-pointer flex items-center gap-2"
               >
                 <CheckSquare className="w-5 h-5" />
                 <span>Done</span>
@@ -315,7 +315,7 @@ export const Canvas: React.FC = () => {
               </div>
               <div className="h-4 bg-stone-900 rounded-full overflow-hidden border border-stone-700 shadow-inner">
                 <div
-                  className={`h-full transition-all duration-100 ease-out ${OutOfInk ? "bg-red-500" : "bg-gradient-to-r from-emerald-400 to-teal-400"}`}
+                  className={`h-full transition-all duration-100 ease-out ${OutOfInk ? "bg-red-500" : "bg-linear-to-r from-emerald-400 to-teal-400"}`}
                   style={{ width: `${inkPercentage}%` }}
                 />
               </div>

@@ -47,7 +47,7 @@ export const JoinScreen: React.FC = () => {
               <input
                 type="text"
                 placeholder="Enter your name"
-                className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl focus:ring-2 focus:ring-[#8e0000] focus:border-transparent transition-all outline-none text-white placeholder-stone-500"
+                className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl focus:ring-2 focus:ring-ink-primary focus:border-transparent transition-all outline-none text-white placeholder-stone-500"
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 maxLength={15}
@@ -58,7 +58,7 @@ export const JoinScreen: React.FC = () => {
               <button
                 onClick={handleCreate}
                 disabled={!playerName}
-                className="w-full relative group overflow-hidden rounded-xl bg-[#8e0000] px-4 py-3 font-semibold text-white transition-all hover:bg-[#a60000] active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full relative group overflow-hidden rounded-xl bg-ink-primary px-4 py-3 font-semibold text-white transition-all hover:bg-ink-primary-accent active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Users className="w-5 h-5" />
                 <span>Create New Game</span>
@@ -83,7 +83,7 @@ export const JoinScreen: React.FC = () => {
               <input
                 type="text"
                 placeholder="E.g. X7K9A2"
-                className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl focus:ring-2 focus:ring-[#F8F6E7] focus:border-transparent transition-all outline-none text-center uppercase tracking-widest text-white placeholder-stone-600"
+                className="w-full px-4 py-3 bg-stone-900 border border-stone-700 rounded-xl focus:ring-2 focus:ring-ink-secondary focus:border-transparent transition-all outline-none text-center uppercase tracking-widest text-white placeholder-stone-600"
                 value={roomId}
                 onChange={(e) => setRoomId(e.target.value)}
                 maxLength={6}
@@ -92,7 +92,7 @@ export const JoinScreen: React.FC = () => {
             <button
               type="submit"
               disabled={!playerName || !roomId}
-              className="w-full rounded-xl bg-[#F8F6E7] px-4 py-3 font-semibold text-black transition-all hover:bg-white active:scale-95 disabled:opacity-50 disabled:active:scale-100 cursor-pointer"
+              className="w-full rounded-xl bg-ink-secondary px-4 py-3 font-semibold text-black transition-all hover:bg-white active:scale-95 disabled:opacity-50 disabled:active:scale-100 cursor-pointer"
             >
               Join Game
             </button>

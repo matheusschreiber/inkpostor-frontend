@@ -117,10 +117,10 @@ export const GameResult: React.FC = () => {
         {isHost ? (
           <button
             onClick={isGameOver ? actions.playAgain : actions.nextRound}
-            className={`w-full cursor-pointer group relative overflow-hidden rounded-2xl p-[2px] transition-all hover:scale-[1.02] active:scale-[0.98] ${
+            className={`w-full cursor-pointer group relative overflow-hidden rounded-2xl p-0.5 transition-all hover:scale-[1.02] active:scale-[0.98] ${
               isGameOver
-                ? "bg-[#8e0000] hover:bg-ink-accent"
-                : "bg-[#F8F6E7] hover:bg-white text-black"
+                ? "bg-ink-primary hover:bg-ink-primary-accent"
+                : "bg-ink-secondary hover:bg-white text-black"
             }`}
           >
             <div

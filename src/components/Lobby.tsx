@@ -33,7 +33,7 @@ export const Lobby: React.FC = () => {
         <div className="bg-stone-800 rounded-3xl p-6 shadow-xl border border-stone-700 flex flex-col max-h-[70vh]">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-              <Users className="text-[#F8F6E7] w-5 h-5 sm:w-6 sm:h-6" />
+              <Users className="text-ink-secondary w-5 h-5 sm:w-6 sm:h-6" />
               Players
             </h3>
             <span className="bg-stone-700 text-stone-300 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full">
@@ -55,7 +55,7 @@ export const Lobby: React.FC = () => {
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-sm sm:text-lg ${player.id === hostId ? "bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-500/20" : "bg-stone-700 text-stone-300"}`}
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-sm sm:text-lg ${player.id === hostId ? "bg-linear-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-orange-500/20" : "bg-stone-700 text-stone-300"}`}
                   >
                     {player.name.charAt(0).toUpperCase()}
                   </div>
@@ -92,7 +92,7 @@ export const Lobby: React.FC = () => {
             <button
               onClick={actions.startGame}
               disabled={!canStart}
-              className="w-full shrink-0 group relative overflow-hidden rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed cursor-pointer bg-[#8e0000] hover:bg-ink-accent"
+              className="w-full shrink-0 group relative overflow-hidden rounded-2xl transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed cursor-pointer bg-ink-primary hover:bg-ink-primary-accent"
             >
               <div className="flex h-full w-full items-center justify-center gap-2 rounded-2xl px-8 py-3 font-bold text-white transition-all group-hover:bg-opacity-0">
                 <span className="text-xl sm:text-2xl tracking-wide font-rubik-wet-paint font-extralight">
