@@ -80,8 +80,7 @@ describe("RoleReveal", () => {
     fireEvent.mouseDown(revealButton!);
 
     expect(screen.getByText("Inkpostor")).toBeInTheDocument();
-    expect(screen.getByText("Fake it till you make it.")).toBeInTheDocument();
-    expect(screen.getByText("Category: Animals")).toBeInTheDocument();
+    expect(screen.getByText("Hint: Animals")).toBeInTheDocument();
   });
 
   it("allows the host to start drawing", () => {
