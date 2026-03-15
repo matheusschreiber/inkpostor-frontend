@@ -39,7 +39,6 @@
   background: var(--color-ink-primary-accent);
 }
 
-/* Scrollbar personalizada */
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
