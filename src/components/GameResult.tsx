@@ -132,10 +132,10 @@ export const GameResult: React.FC = () => {
                 </span>
               ) : (
                 <>
-                <Play className="fill-current w-5 h-5" />
-                <span className="sm:text-xl text-lg font-extrabold uppercase">
-                  Next Round
-                </span>
+                  <Play className="fill-current w-5 h-5" />
+                  <span className="sm:text-xl text-lg font-extrabold uppercase">
+                    Next Round
+                  </span>
                 </>
               )}
             </div>
