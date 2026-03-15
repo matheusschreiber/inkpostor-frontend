@@ -1,7 +1,7 @@
 import React from "react";
 import { useGameStore } from "../store/gameState";
 import { Users, Crown, Loader2 } from "lucide-react";
-import { MAX_PLAYERS } from "../lib/constants";
+import { MAX_PLAYERS, MIN_PLAYERS } from "../lib/constants";
 
 export const Lobby: React.FC = () => {
   const roomId = useGameStore((state) => state.roomId);
@@ -77,12 +77,12 @@ export const Lobby: React.FC = () => {
               </div>
             ))}
 
-            {players.length < 3 && (
+            {players.length < MIN_PLAYERS && (
               <div className="p-4 rounded-xl border border-dashed border-stone-600 bg-stone-800/50 text-center flex flex-col items-center gap-2">
                 <Loader2 className="w-6 h-6 text-stone-500 animate-spin" />
                 <p className="text-stone-400">Waiting for more players...</p>
                 <p className="text-xs text-stone-500">
-                  Need at least 3 players to start
+                  Need at least {MIN_PLAYERS} players to start
                 </p>
               </div>
             )}
