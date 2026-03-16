@@ -45,7 +45,7 @@ describe("GameResult", () => {
 
     render(<GameResult />);
 
-    expect(screen.getByText("Impostor Defeated!")).toBeInTheDocument();
+    expect(screen.getByText("Inkpostor Defeated")).toBeInTheDocument();
 
     // Use getAllByText for 'Impostor' since it appears twice
     // (Once as ejected player, once as the inkpostor text)
@@ -69,7 +69,7 @@ describe("GameResult", () => {
 
     render(<GameResult />);
 
-    expect(screen.getByText("Impostor Won!")).toBeInTheDocument();
+    expect(screen.getByText("Inkpostor Won")).toBeInTheDocument();
     expect(screen.getByText("Player 3")).toBeInTheDocument(); // Ejected name
     expect(screen.getByText("Impostor")).toBeInTheDocument(); // Was the inkpostor
   });
@@ -88,7 +88,7 @@ describe("GameResult", () => {
 
     render(<GameResult />);
 
-    expect(screen.getByText("Nobody was ejected.")).toBeInTheDocument();
+    expect(screen.getByText("Nobody was ejected...")).toBeInTheDocument();
   });
 
   it("allows host to play again", () => {
