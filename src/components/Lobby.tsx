@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useGameStore } from "../store/gameState";
-import { Users, Crown, Loader2, Copy, Check } from "lucide-react";
+import { Users, Crown, Loader2, Copy, Check, HelpCircle } from "lucide-react";
 import { MAX_PLAYERS, MIN_PLAYERS } from "../lib/constants";
+import { RulesModal } from "./RulesModal";
 
 export const Lobby: React.FC = () => {
   const roomId = useGameStore((state) => state.roomId);
@@ -10,6 +11,7 @@ export const Lobby: React.FC = () => {
   const hostId = useGameStore((state) => state.hostId);
   const actions = useGameStore((state) => state.actions);
   const [copied, setCopied] = useState(false);
+  const [isRulesOpen, setIsRulesOpen] = useState(false);
 
   const isHost = myId === hostId;
   const canStart = isHost && players.length >= MIN_PLAYERS;
@@ -27,8 +29,16 @@ export const Lobby: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center max-h-screen p-4 py-12 bg-stone-900">
-      <div className="max-w-lg w-full space-y-4 sm:space-y-8">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 py-12 bg-stone-900">
+      <div className="max-w-lg w-full space-y-4 sm:space-y-8 relative">
+        <button
+          onClick={() => setIsRulesOpen(true)}
+          className="absolute -top-8 right-0 flex items-center gap-2 px-3 py-1.5 bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white rounded-full border border-stone-700 transition-all text-xs font-bold uppercase tracking-wider group cursor-pointer"
+        >
+          <HelpCircle className="w-4 h-4 text-ink-primary group-hover:scale-110 transition-transform" />
+          How to play
+        </button>
+
         <div className="text-center space-y-2 sm:space-y-4">
           <h2 className="text-stone-400 font-medium tracking-widest uppercase text-sm">
             Room Code
@@ -159,6 +169,8 @@ export const Lobby: React.FC = () => {
           )}
         </div>
       </div>
+
+      <RulesModal isOpen={isRulesOpen} onClose={() => setIsRulesOpen(false)} />
     </div>
   );
 };
