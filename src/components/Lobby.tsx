@@ -92,6 +92,7 @@ export const Lobby: React.FC = () => {
               <button
                 onClick={() => setIsRulesOpen(true)}
                 className="flex items-center gap-2 font-bold cursor-pointer"
+                data-testid="how-to-play-btn"
               >
                 <HelpCircle className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-ink-primary hover:text-ink-primary-accent" />
               </button>

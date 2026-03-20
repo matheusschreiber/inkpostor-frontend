@@ -153,7 +153,7 @@ describe("Lobby", () => {
 
     render(<Lobby />);
 
-    const howToPlayBtn = screen.getByRole("button", { name: /how to play/i });
+    const howToPlayBtn = screen.getByTestId("how-to-play-btn");
     await user.click(howToPlayBtn);
 
     expect(screen.getByText("How to Play Inkpostor")).toBeInTheDocument();
