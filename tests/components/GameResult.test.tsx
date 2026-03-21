@@ -20,7 +20,7 @@ describe("GameResult", () => {
       { id: "socket-456", name: "Impostor" },
       { id: "socket-789", name: "Player 3" },
     ],
-    secretWord: "Pineapple",
+    secretWord: "Apple",
     secretCategory: "Food",
     votes: {}, // To be populated in tests
     actions: { playAgain: mockPlayAgain },
@@ -51,7 +51,7 @@ describe("GameResult", () => {
     expect(screen.getByText("Impostor was ejected.")).toBeInTheDocument();
     expect(screen.getByText("Impostor was the Inkpostor!")).toBeInTheDocument();
 
-    expect(screen.getByText("Pineapple")).toBeInTheDocument();
+    expect(screen.getByText("Apple")).toBeInTheDocument();
   });
 
   it("shows Impostor Won if normal player receives most votes", () => {
