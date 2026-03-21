@@ -9,16 +9,13 @@ vi.mock("../../src/store/gameState", () => ({
   useGameStore: vi.fn(),
 }));
 
-// Mock fetch
-global.fetch = vi.fn();
-
 describe("JoinScreen", () => {
   const mockConnectAndCreate = vi.fn();
   const mockConnectAndJoin = vi.fn();
 
   beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn());
     vi.clearAllMocks();
-    (global.fetch as any).mockClear();
     (useGameStore as any).mockImplementation((selector: any) => {
       const state = {
         actions: {
@@ -32,7 +29,7 @@ describe("JoinScreen", () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it("renders the initial screen with inputs and buttons", () => {
