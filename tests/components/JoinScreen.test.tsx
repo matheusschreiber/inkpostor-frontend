@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { JoinScreen } from "../../src/components/JoinScreen";
 import { useGameStore } from "../../src/store/gameState";
 
@@ -14,6 +14,7 @@ describe("JoinScreen", () => {
   const mockConnectAndJoin = vi.fn();
 
   beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn());
     vi.clearAllMocks();
     (useGameStore as any).mockImplementation((selector: any) => {
       const state = {
@@ -25,6 +26,10 @@ describe("JoinScreen", () => {
       };
       return selector(state);
     });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it("renders the initial screen with inputs and buttons", () => {
@@ -121,5 +126,97 @@ describe("JoinScreen", () => {
     expect(
       screen.getByText("Test error connection failed"),
     ).toBeInTheDocument();
+  });
+
+  describe("Server Health Check", () => {
+    it("shows 'Checking server status...' on initial render", async () => {
+      (global.fetch as any).mockImplementation(
+        () =>
+          new Promise(() => {
+            // Never resolves to keep checking state
+          }),
+      );
+
+      render(<JoinScreen />);
+
+      expect(screen.getByText("Checking server status...")).toBeInTheDocument();
+    });
+
+    it("shows 'Server online' when health check succeeds", async () => {
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+      });
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        expect(screen.getByText("Server online")).toBeInTheDocument();
+      });
+    });
+
+    it("shows 'Server offline' when health check fails", async () => {
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: false,
+      });
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        expect(screen.getByText("Server offline")).toBeInTheDocument();
+      });
+    });
+
+    it("shows 'Server offline' when health check throws error", async () => {
+      (global.fetch as any).mockRejectedValueOnce(new Error("Network error"));
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        expect(screen.getByText("Server offline")).toBeInTheDocument();
+      });
+    });
+
+    it("calls health endpoint with correct URL", async () => {
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+      });
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith(
+          expect.stringContaining("/health"),
+          { method: "GET" },
+        );
+      });
+    });
+
+    it("displays green pulsing indicator when server is online", async () => {
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+      });
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        const onlineIndicator = screen.getByText("Server online")
+          .previousElementSibling as HTMLElement;
+        expect(onlineIndicator).toHaveClass("bg-green-500");
+      });
+    });
+
+    it("displays red pulsing indicator when server is offline", async () => {
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: false,
+      });
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        const offlineIndicator = screen.getByText("Server offline")
+          .previousElementSibling as HTMLElement;
+        expect(offlineIndicator).toHaveClass("bg-red-500");
+      });
+    });
   });
 });

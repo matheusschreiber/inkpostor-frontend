@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGameStore } from "../store/gameState";
 import { Users } from "lucide-react";
+import { SERVER_URL } from "../socket";
 
 export const JoinScreen: React.FC = () => {
   const [playerName, setPlayerName] = useState("");
   const [roomId, setRoomId] = useState("");
+  const [isCheckingHealth, setIsCheckingHealth] = useState(true);
+  const [serverOnline, setServerOnline] = useState(false);
   const actions = useGameStore((state) => state.actions);
   const errorMessage = useGameStore((state) => state.errorMessage);
 
@@ -20,6 +23,29 @@ export const JoinScreen: React.FC = () => {
     if (!playerName || !roomId) return;
     actions.connectAndJoin(roomId.toUpperCase(), playerName);
   };
+
+  useEffect(() => {
+    const checkHealth = async () => {
+      setIsCheckingHealth(true);
+      try {
+        const res = await fetch(`${SERVER_URL || ""}/health`, {
+          method: "GET",
+        });
+
+        if (res.ok) {
+          setServerOnline(true);
+        } else {
+          setServerOnline(false);
+        }
+      } catch {
+        setServerOnline(false);
+      } finally {
+        setIsCheckingHealth(false);
+      }
+    };
+
+    checkHealth();
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-stone-900">
@@ -98,6 +124,26 @@ export const JoinScreen: React.FC = () => {
             </button>
           </form>
         </div>
+      </div>
+      <div className="flex items-center justify-center h-8">
+        {isCheckingHealth ? (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+            <span className="text-sm text-stone-400">
+              Checking server status...
+            </span>
+          </div>
+        ) : serverOnline ? (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-sm text-green-500">Server online</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+            <span className="text-sm text-red-500">Server offline</span>
+          </div>
+        )}
       </div>
     </div>
   );
