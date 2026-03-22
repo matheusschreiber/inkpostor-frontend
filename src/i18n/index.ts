@@ -11,13 +11,19 @@ const resources = {
   es: esTranslation,
 };
 
+const savedLanguage = localStorage.getItem("language") || "en";
+
 i18n.use(initReactI18next).init({
   resources,
-  lng: "en", // Default language
+  lng: savedLanguage,
   fallbackLng: "en",
   interpolation: {
     escapeValue: false, // React already safe from xss
   },
+});
+
+i18n.on("languageChanged", (lng) => {
+  localStorage.setItem("language", lng);
 });
 
 export default i18n;

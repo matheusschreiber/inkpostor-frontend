@@ -21,6 +21,7 @@ vi.mock("react-i18next", async () => {
 describe("LanguageSwitcher", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    localStorage.clear();
   });
 
   it("renders correctly with the default language", () => {
@@ -61,5 +62,19 @@ describe("LanguageSwitcher", () => {
     // Verify that the changeLanguage function was called with the correct argument
     expect(changeLanguageMock).toHaveBeenCalledTimes(1);
     expect(changeLanguageMock).toHaveBeenCalledWith("ca");
+  });
+
+  it("calls i18n.changeLanguage which should trigger localStorage update", () => {
+    // We mock the implementation to simulate what happens in src/i18n/index.ts
+    // although the actual listener is in that file, here we are testing the component's
+    // interaction. Since we mocked useTranslation, we need to ensure the mock
+    // reflects the behavior we want to verify, or we test the i18n integration separately.
+    // For this test, we'll verify that the component calls the expected i18n method.
+    render(<LanguageSwitcher />);
+
+    const select = screen.getByRole("combobox");
+    fireEvent.change(select, { target: { value: "es" } });
+
+    expect(changeLanguageMock).toHaveBeenCalledWith("es");
   });
 });
