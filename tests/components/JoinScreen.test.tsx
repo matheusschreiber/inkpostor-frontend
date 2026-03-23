@@ -125,7 +125,6 @@ describe("JoinScreen", () => {
       ok: false,
     });
 
-    const user = userEvent.setup();
     render(<JoinScreen />);
 
     await waitFor(() => {
