@@ -65,16 +65,18 @@ describe("LanguageSwitcher", () => {
   });
 
   it("calls i18n.changeLanguage which should trigger localStorage update", () => {
-    // We mock the implementation to simulate what happens in src/i18n/index.ts
-    // although the actual listener is in that file, here we are testing the component's
-    // interaction. Since we mocked useTranslation, we need to ensure the mock
-    // reflects the behavior we want to verify, or we test the i18n integration separately.
-    // For this test, we'll verify that the component calls the expected i18n method.
+    // For this test, we simulate the side effect that src/i18n/index.ts would have
+    // by making the mocked changeLanguage write the selected language to localStorage.
+    changeLanguageMock.mockImplementationOnce((lang: string) => {
+      localStorage.setItem("inkpostor_language", lang);
+    });
+
     render(<LanguageSwitcher />);
 
     const select = screen.getByRole("combobox");
     fireEvent.change(select, { target: { value: "es" } });
 
     expect(changeLanguageMock).toHaveBeenCalledWith("es");
+    expect(localStorage.getItem("inkpostor_language")).toBe("es");
   });
 });
