@@ -37,9 +37,11 @@ describe("i18n initialization", () => {
   });
 
   it("handles localStorage errors gracefully", () => {
-    const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
-      throw new Error('Storage disabled');
-    });
+    const getItemSpy = vi
+      .spyOn(Storage.prototype, "getItem")
+      .mockImplementation(() => {
+        throw new Error("Storage disabled");
+      });
 
     const i18n = createI18nInstance();
 
