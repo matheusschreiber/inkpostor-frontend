@@ -50,7 +50,7 @@ describe("JoinScreen", () => {
     ).toBeInTheDocument();
   });
 
-  it('disables "Create New Game" heavily when name is empty', () => {
+  it('disables "Create New Game" when name is empty', () => {
     render(<JoinScreen />);
 
     const createButton = screen.getByRole("button", {
@@ -59,9 +59,49 @@ describe("JoinScreen", () => {
     expect(createButton).toBeDisabled();
   });
 
+  it("disables inputs and buttons while checking server health", async () => {
+    (global.fetch as any).mockImplementation(
+      () =>
+        new Promise(() => {
+          // Never resolves to keep checking state
+        }),
+    );
+
+    render(<JoinScreen />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Checking the service status..."),
+      ).toBeInTheDocument();
+    });
+
+    const nameInput = screen.getByPlaceholderText(
+      "Enter your name",
+    ) as HTMLInputElement;
+    const roomInput = screen.getByPlaceholderText(
+      "E.g. X7K9A2",
+    ) as HTMLInputElement;
+    const createButton = screen.getByRole("button", {
+      name: /create new game/i,
+    });
+    const joinButton = screen.getByRole("button", { name: /join game/i });
+
+    expect(nameInput.disabled).toBe(true);
+    expect(roomInput.disabled).toBe(true);
+    expect(createButton).toBeDisabled();
+    expect(joinButton).toBeDisabled();
+  });
+
   it('enables "Create New Game" when name is entered and calls connectAndCreate', async () => {
     const user = userEvent.setup();
     render(<JoinScreen />);
+
+    // Wait for health check to complete
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Checking the service status..."),
+      ).not.toBeInTheDocument();
+    });
 
     const nameInput = screen.getByPlaceholderText("Enter your name");
     const createButton = screen.getByRole("button", {
@@ -80,9 +120,36 @@ describe("JoinScreen", () => {
     );
   });
 
+  it("disables create button even with name entered while server is offline", async () => {
+    (global.fetch as any).mockResolvedValueOnce({
+      ok: false,
+    });
+
+    const user = userEvent.setup();
+    render(<JoinScreen />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("The service is currently unavailable"),
+      ).toBeInTheDocument();
+    });
+
+    // Form should not be visible when offline
+    expect(
+      screen.queryByPlaceholderText("Enter your name"),
+    ).not.toBeInTheDocument();
+  });
+
   it('disables "Join Game" when inputs are empty or partially empty', async () => {
     const user = userEvent.setup();
     render(<JoinScreen />);
+
+    // Wait for health check to complete
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Checking the service status..."),
+      ).not.toBeInTheDocument();
+    });
 
     const nameInput = screen.getByPlaceholderText("Enter your name");
     const roomInput = screen.getByPlaceholderText("E.g. X7K9A2");
@@ -101,6 +168,13 @@ describe("JoinScreen", () => {
   it('enables "Join Game" when both inputs are entered and calls connectAndJoin', async () => {
     const user = userEvent.setup();
     render(<JoinScreen />);
+
+    // Wait for health check to complete
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Checking the service status..."),
+      ).not.toBeInTheDocument();
+    });
 
     const nameInput = screen.getByPlaceholderText("Enter your name");
     const roomInput = screen.getByPlaceholderText("E.g. X7K9A2");
@@ -138,7 +212,7 @@ describe("JoinScreen", () => {
   });
 
   describe("Server Health Check", () => {
-    it("shows 'Checking server status...' on initial render", async () => {
+    it("shows 'Checking the service status...' on initial render", async () => {
       (global.fetch as any).mockImplementation(
         () =>
           new Promise(() => {
@@ -148,10 +222,12 @@ describe("JoinScreen", () => {
 
       render(<JoinScreen />);
 
-      expect(screen.getByText("Checking server status...")).toBeInTheDocument();
+      expect(
+        screen.getByText("Checking the service status..."),
+      ).toBeInTheDocument();
     });
 
-    it("shows 'Server offline' when health check fails", async () => {
+    it("hides form and shows offline message when server check completes and server is offline", async () => {
       (global.fetch as any).mockResolvedValueOnce({
         ok: false,
       });
@@ -160,19 +236,41 @@ describe("JoinScreen", () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText("Server is currently unavailable"),
+          screen.getByText("The service is currently unavailable"),
+        ).toBeInTheDocument();
+      });
+
+      // Form elements should not be visible
+      expect(
+        screen.queryByPlaceholderText("Enter your name"),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByPlaceholderText("E.g. X7K9A2"),
+      ).not.toBeInTheDocument();
+    });
+
+    it("shows offline message when health check fails", async () => {
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: false,
+      });
+
+      render(<JoinScreen />);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("The service is currently unavailable"),
         ).toBeInTheDocument();
       });
     });
 
-    it("shows 'Server offline' when health check throws error", async () => {
+    it("shows offline message when health check throws error", async () => {
       (global.fetch as any).mockRejectedValueOnce(new Error("Network error"));
 
       render(<JoinScreen />);
 
       await waitFor(() => {
         expect(
-          screen.getByText("Server is currently unavailable"),
+          screen.getByText("The service is currently unavailable"),
         ).toBeInTheDocument();
       });
     });
@@ -189,21 +287,6 @@ describe("JoinScreen", () => {
           expect.stringContaining("/health"),
           { method: "GET" },
         );
-      });
-    });
-
-    it("displays red pulsing indicator when server is offline", async () => {
-      (global.fetch as any).mockResolvedValueOnce({
-        ok: false,
-      });
-
-      render(<JoinScreen />);
-
-      await waitFor(() => {
-        const offlineIndicator = screen.getByText(
-          "Server is currently unavailable",
-        ).previousElementSibling as HTMLElement;
-        expect(offlineIndicator).toHaveClass("bg-red-500");
       });
     });
   });
